@@ -4,7 +4,8 @@ import Signup from './pages/Signup';
 import AddProduct from './pages/AddProduct';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
-// import './App.css'  <-- હવે આની જરૂર નથી, કાઢી નાખજે
+import { PRODUCT_CATEGORIES } from './constants/categories';
+
 
 // --- 1. Navbar Component (Tailwind Style) ---
 function Navbar() {
@@ -27,10 +28,10 @@ function Navbar() {
         <Link to="/" className="text-2xl font-bold text-blue-600 hover:text-blue-800 transition">
           🛍️ Mega Store
         </Link>
-
+    
         {/* Links */}
         <div className="flex items-center gap-4 font-medium">
-          <Link to="/" className="text-gray-700 hover:text-blue-600 transition hidden sm:block">Home</Link>
+          <Link to="/" className="text-gray-700 hover:text-blue-600 transition sm:block ">Home</Link>
 
           {/* Admin Link */}
           {token && isAdmin && (
@@ -63,7 +64,8 @@ function Navbar() {
 function Home() {
   const [products, setProducts] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
-  const [selectedCategory, setSelectedCategory] = useState("All"); // 👉 નવું: કેટેગરી માટે સ્ટેટ
+  const [selectedCategory, setSelectedCategory] = useState("All"); // 
+  const navigate = useNavigate();
 
   const fetchProducts = () => {
     axios.get('http://127.0.0.1:8000/products/')
@@ -74,20 +76,21 @@ function Home() {
   useEffect(() => {
     fetchProducts();
   }, []);
-  const categories = ["All", ...new Set(products.map(p => p.category))];
+  const categories = ["All", ...PRODUCT_CATEGORIES];
   const handleBuy = async (id) => {
     const token = localStorage.getItem("token");
     if (!token) {
       alert("Please Login to Buy! 🛒");
+      navigate("/login");
       return;
     }
     try {
-      // Backend ના Buy ફંક્શનને કોલ કરો (ટોકન સાથે જો જરૂર હોય તો)
+      // Backend 
       await axios.post(`http://127.0.0.1:8000/buy/${id}`, {}, {
         headers: { Authorization: `Bearer ${token}` }
       });
       alert("Purchase Succesfully🎉");
-      fetchProducts(); // સ્ટોક અપડેટ કરવા
+      fetchProducts(); 
     } catch (error) {
       console.error(error);
       alert (error.response?.data?.detail || "Error: Stock is Empty");
@@ -116,7 +119,7 @@ function Home() {
             className="w-full max-w-md border border-gray-300 rounded-full px-5 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500 shadow-sm transition"
           />
 
-          {/* 👉 Category Buttons (Horizontal Scroll) */}
+          
           <div className="flex gap-2 overflow-x-auto w-full max-w-4xl justify-center px-4 pb-2">
             {categories.map((cat) => (
               <button
@@ -124,8 +127,8 @@ function Home() {
                 onClick={() => setSelectedCategory(cat)}
                 className={`px-4 py-2 rounded-full text-sm font-bold whitespace-nowrap transition-all shadow-sm
                   ${selectedCategory === cat
-                    ? "bg-blue-600 text-white scale-105" // Active હોય તો વાદળી
-                    : "bg-gray-100 text-gray-600 hover:bg-gray-200" // Inactive હોય તો રાખોડી
+                    ? "bg-blue-600 text-white scale-105" 
+                    : "bg-gray-100 text-gray-600 hover:bg-gray-200" 
                   }`}
               >
                 {cat}
@@ -144,33 +147,33 @@ function Home() {
           <h3 className="text-center text-xl text-gray-500 mt-10">No products match your search! 😕</h3>
         ) : (
 
-          /* Grid Layout: મોબાઈલમાં 1, ટેબ્લેટમાં 2, કોમ્પ્યુટરમાં 3-4 */
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-8 gap-6">
+         // Grid Layout:
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6 py-6">
             {filteredProducts.map((item) => (
               <div
                 key={item.id}
-                className="bg-white rounded-2xl shadow-lg hover:shadow-xl transition duration-300 overflow-hidden flex flex-col transform hover:-translate-y-1"
+                className="bg-white rounded-2xl shadow-md hover:shadow-xl transition duration-300 overflow-hidden flex flex-col justify-between  border border-gray-100 transform hover:-translate-y-1 "
               >
 
                 {/* Image Section */}
-                <div className="h-48 overflow-hidden bg-gray-100 rounded-2xl flex items-center justify-center">
+                <div className="h-48 w-full overflow-hidden bg-gray-50 flex  items-center justify-center p-3">
                   <img
                     src={item.image_url || "https://via.placeholder.com/260x150"}
                     alt={item.name}
-                    className="w-full h-full object-contain"
+                    className="max-w-full max-h-full object-contain"
                     onError={(e) => { e.target.src = "https://via.placeholder.com/260x150?text=No+Image" }}
                   />
                 </div>
 
                 {/* Content Section */}
-                <div className="p-2 2 2 1  flex flex-col">
-                  <h3 className="text-lg font-bold text-gray-800 mb-1 truncate">{item.name}</h3>
-                  <p className="text-gray-500 text-sm mb-3 line-clamp-2">{item.description}</p>
+                <div className="p-4  flex flex-col flex-grow  justify-between">
+                  <h3 className="text-base font-bold text-gray-800 mb-2 whitespace-normal line-clamp-2 min-h-12 ">{item.name}</h3>
+                  {/*<p className="text-gray-500 text-sm mb-3 line-clamp-2">{item.description}</p>*/}
 
                   <div className="mt-auto">
-                    <div className="flex justify-between items-center mb-3">
-                      <span className="text-xl  font-bold text-green-600">₹{item.price}</span>
-                      <span className={`text-xs font-bold px-2 py-1 rounded ${item.stock > 0 ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'}`}>
+                    <div className="flex justify-between items-center mb-3 gap-2">
+                      <span className="text-lg  font-extrabold text-green-600">₹{item.price}</span>
+                      <span className={`text-xs font-bold px-2 py-1 rounded shrink-0 ${item.stock > 0 ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'}`}>
                         {item.stock > 0 ? `Stock: ${item.stock}` : "Out of Stock"}
                       </span>
                     </div>
@@ -178,7 +181,7 @@ function Home() {
                     <button
                       onClick={() => handleBuy(item.id)}
                       disabled={item.stock <= 0}
-                      className={`w-full py-2 rounded-lg font-bold text-white transition shadow-md 
+                      className={`w-full py-2.5 rounded-xl font-bold text-white transition shadow-sx text-sm 
                         ${item.stock > 0
                           ? "bg-blue-600 hover:bg-blue-700 active:scale-95"
                           : "bg-gray-400 cursor-not-allowed"}`}
@@ -200,7 +203,7 @@ function Home() {
 function App() {
   return (
     <BrowserRouter>
-      {/* Navbar હવે Router ની અંદર છે, એટલે useNavigate ચાલશે */}
+     
       <Navbar />
       <Routes>
         <Route path="/" element={<Home />} />

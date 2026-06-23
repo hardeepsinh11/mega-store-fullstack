@@ -162,7 +162,7 @@ def add_product(
     db.refresh(new_product)
     return {"message": "Product with Image added!", "product": new_product}
 
-@app.get("/products/")
+@app.get("/products")
 def read_products(db: Session = Depends(get_db)):
     products = db.query(models.Product).all()
     return products

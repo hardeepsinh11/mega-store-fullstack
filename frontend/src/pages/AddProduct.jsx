@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { PRODUCT_CATEGORIES } from '../constants/categories';
 
 function AddProduct() {
     const [name, setName] = useState("");
@@ -9,15 +10,15 @@ function AddProduct() {
     const [category, setCategory] = useState("");
     const [desc, setDesc] = useState("");
     const [imageFile, setImageFile] = useState(null);
+    
 
     const navigate = useNavigate();
-    const categories = ["Electronics", "Clothing", "Food","Shoes"
-     ];
+    const categories = PRODUCT_CATEGORIES;
     useEffect(() => {
         const isAdmin = localStorage.getItem("isAdmin") === "true";
         if (!isAdmin) {
             alert("YOU ARE NOT ADMIN!!");
-            navigate("/"); // Login ની જગ્યાએ home પર મોકલવું સારું, પણ તમારી મરજી
+            navigate("/"); // 
         }
     }, [navigate]);
 
@@ -52,7 +53,7 @@ function AddProduct() {
             });
 
             alert("Product & Image Added! ✅");
-            navigate("/"); // પ્રોડક્ટ ઉમેરાઈ જાય એટલે હોમ પેજ પર
+            navigate("/"); // 
         } catch (error) {
             console.error(error);
             alert("Error: I think You not an Admin.");

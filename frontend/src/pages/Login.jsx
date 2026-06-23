@@ -30,7 +30,7 @@ function Login() {
 
         } catch (error) {
             console.error(error);
-            alert("Login Failed! Email અથવા Password ખોટો છે.");
+            alert("Login Failed! Email and Password is Wrong..");
         }
     };
 
