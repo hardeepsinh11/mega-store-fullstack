@@ -121,7 +121,7 @@ function Home() {
             className="w-full max-w-md border border-gray-300 rounded-full px-5 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500 shadow-sm transition"
           />
           
-          <div className="flex gap-2 overflow-x-auto max-w-4xl justify-center px-4 pb-2">
+          <div className="flex gap-2 overflow-x-auto w-full max-w-4xl justify-center px-4 pb-2">
             {categories.map((cat) => (
               <button
                 key={cat}
