@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+import { API_BASE_URL } from '../config/api';
 
 function Login() {
     const [email, setEmail] = useState("");
@@ -12,7 +13,7 @@ function Login() {
             params.append('username', email);
             params.append('password', password);
 
-            const response = await axios.post("http://127.0.0.1:8000/login", params, {
+            const response = await axios.post(`${API_BASE_URL}/login`, params, {
                 headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
             });
 

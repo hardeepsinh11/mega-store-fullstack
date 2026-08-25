@@ -5,6 +5,7 @@ from sqlalchemy.orm import Session
 from sqlalchemy import or_
 from passlib.context import CryptContext
 from jose import jwt,JWTError
+import os
 import shutil
 from fastapi.middleware.cors import CORSMiddleware
 
@@ -36,14 +37,16 @@ def create_access_token(data: dict):
 models.Base.metadata.create_all(bind=engine)
 
 app = FastAPI()
-origins = [
-    "http://localhost",
-    "http://localhost:8080",
-    "*"
-]
+
+BASE_URL = os.getenv("BASE_URL", "http://127.0.0.1:8000")
+CORS_ORIGINS = os.getenv(
+    "CORS_ORIGINS",
+    "http://localhost:5173,http://127.0.0.1:5173",
+).split(",")
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:5173","http://127.0.0.1:5173"],
+    allow_origins=CORS_ORIGINS,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -147,7 +150,7 @@ def add_product(
     with open(file_location, "wb") as buffer:
         shutil.copyfileobj(file.file, buffer)
     # શરત 2: ભાવ નેગેટિવ ના હોવો જોઈએ (Price Validation)
-    full_image_url = f"http://127.0.0.1:8000/static/{file.filename}"
+    full_image_url = f"{BASE_URL.rstrip('/')}/static/{file.filename}"
    
     new_product = models.Product(
         name=name,

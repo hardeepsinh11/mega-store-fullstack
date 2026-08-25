@@ -5,6 +5,7 @@ import AddProduct from './pages/AddProduct';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { PRODUCT_CATEGORIES } from './constants/categories';
+import { API_BASE_URL } from './config/api';
 
 
 // --- 1. Navbar Component (Tailwind Style) ---
@@ -68,7 +69,7 @@ function Home() {
   const navigate = useNavigate();
 
   const fetchProducts = () => {
-    axios.get('http://127.0.0.1:8000/products/')
+    axios.get(`${API_BASE_URL}/products/`)
       .then(res => setProducts(res.data))
       .catch(err => console.log(err));
   };
@@ -86,7 +87,7 @@ function Home() {
     }
     try {
       // Backend 
-      await axios.post(`http://127.0.0.1:8000/buy/${id}`, {}, {
+      await axios.post(`${API_BASE_URL}/buy/${id}`, {}, {
         headers: { Authorization: `Bearer ${token}` }
       });
       alert("Purchase Succesfully🎉");

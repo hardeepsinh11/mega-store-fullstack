@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { PRODUCT_CATEGORIES } from '../constants/categories';
+import { API_BASE_URL } from '../config/api';
 
 function AddProduct() {
     const [name, setName] = useState("");
@@ -45,7 +46,7 @@ function AddProduct() {
                 formData.append("file", imageFile);
             }
 
-            await axios.post("http://127.0.0.1:8000/products/add", formData, {
+            await axios.post(`${API_BASE_URL}/products/add`, formData, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                     "Content-Type": "multipart/form-data"
