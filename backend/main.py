@@ -38,13 +38,11 @@ models.Base.metadata.create_all(bind=engine)
 
 app = FastAPI()
 
-BASE_URL = os.getenv("BASE_URL", "http://127.0.0.1:8000")
-CORS_ORIGINS = os.getenv(
-    "CORS_ORIGINS",
-    "http://localhost:5173,http://127.0.0.1:5173",
-).split(",")
+BASE_URL = os.getenv("BASE_URL", "https://mega-store-fullstack.onrender.com")
+DEFAULT_ORIGINS="http://localhost:5173,http://127.0.0.1:5173,https://mega-store-fullstack.vercel.app"
+CORS_ORIGINS = os.getenv("CORS_ORIGINS",DEFAULT_ORIGINS).split(",")
 
-app.add_middleware(
+app.add_middleware( 
     CORSMiddleware,
     allow_origins=CORS_ORIGINS,
     allow_credentials=True,

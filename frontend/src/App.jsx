@@ -167,7 +167,7 @@ function Home() {
                 </div>
 
                 {/* Content Section */}
-                <div className="p-4  flex flex-col flex-grow  justify-between">
+                <div className="p-4  flex flex-col grow  justify-between">
                   <h3 className="text-base font-bold text-gray-800 mb-2 whitespace-normal line-clamp-2 min-h-12 ">{item.name}</h3>
                   {/*<p className="text-gray-500 text-sm mb-3 line-clamp-2">{item.description}</p>*/}
 
