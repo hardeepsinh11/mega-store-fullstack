@@ -69,7 +69,7 @@ function Home() {
   const navigate = useNavigate();
 
   const fetchProducts = () => {
-    axios.get(`${API_BASE_URL}/products/`)
+    axios.get(`${API_BASE_URL}/products`)
       .then(res => setProducts(res.data))
       .catch(err => console.log(err));
   };
