@@ -109,9 +109,10 @@ function Home() {
     <div className="min-h-screen bg-gray-50 pb-10">
 
       {/* Search & Filter Section */}
-      <div className="bg-white py-6 shadow-sm mb-6 sticky top-60px z-40">
+      <div className="bg-white py-8 shadow-sm mb-6 sticky top-60px ">
         <div className="container mx-auto flex flex-col items-center gap-4">
 
+          {/* Search Bar */}
           {/* Search Bar */}
           <input
             type="text"
@@ -119,9 +120,8 @@ function Home() {
             onChange={(e) => setSearchTerm(e.target.value)}
             className="w-full max-w-md border border-gray-300 rounded-full px-5 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500 shadow-sm transition"
           />
-
           
-          <div className="flex gap-2 overflow-x-auto w-full max-w-4xl justify-center px-4 pb-2">
+          <div className="flex gap-2 overflow-x-auto max-w-4xl justify-center px-4 pb-2">
             {categories.map((cat) => (
               <button
                 key={cat}
