@@ -1,6 +1,6 @@
 from pydantic import BaseModel
 
-# User માટે
+# User 
 class UserCreate(BaseModel):
     name: str
     email: str 
@@ -9,7 +9,7 @@ class UserCreate(BaseModel):
     
     is_admin: bool=False
 
-# Product માટે
+# Product 
 class ProductCreate(BaseModel):
     name: str
     category: str
