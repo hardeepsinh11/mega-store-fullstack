@@ -4,9 +4,12 @@ from sqlalchemy.orm import sessionmaker,declarative_base
 import os
 
 DATABASE_URL = os.getenv("DATABASE_URL")
-# 1. Engine 
+
 if not DATABASE_URL:
     raise ValueError("DATABASE_URL is not set")
+
+print("DATABASE URL:", DATABASE_URL.split("@")[-1])
+
 engine = create_engine(DATABASE_URL)
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
