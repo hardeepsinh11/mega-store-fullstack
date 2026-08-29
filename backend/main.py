@@ -33,7 +33,6 @@ def create_access_token(data: dict):
     return encoded_jwt
 
 # --- App Setup ---
-# આ લાઈન જાદુ કરે છે: models માં જે લખ્યું છે તે database માં બનાવી દેશે
 models.Base.metadata.create_all(bind=engine)
 
 app = FastAPI()
