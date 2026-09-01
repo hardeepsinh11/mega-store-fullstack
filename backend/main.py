@@ -135,10 +135,9 @@ def add_product(
     price: int = Form(...),
     stock: int = Form(...),
     description: str = Form(...),
-    file: UploadFile = File(...),   # આ છે અસલી ફાઈલ!
+    file: UploadFile = File(...),   
     db: Session = Depends(get_db),
     current_user: models.User = Depends(get_current_user)):
-    # શરત 1: શું આ Admin છે? (Only Admin Check)
     if not current_user.is_admin:
         raise HTTPException(status_code=403, detail="Sorry! Only Admin can Add the products")
 
