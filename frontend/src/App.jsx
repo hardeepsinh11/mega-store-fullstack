@@ -159,10 +159,10 @@ function Home() {
                 {/* Image Section */}
                 <div className="h-48 w-full overflow-hidden bg-gray-50 flex  items-center justify-center p-3">
                   <img
-                    src={item.image_url || "https://via.placeholder.com/260x150"}
+                    src={item.image_url }
                     alt={item.name}
                     className="max-w-full max-h-full object-contain"
-                    onError={(e) => { e.target.src = "https://via.placeholder.com/260x150?text=No+Image" }}
+                    onError={(e) => { e.target.src }}
                   />
                 </div>
 
