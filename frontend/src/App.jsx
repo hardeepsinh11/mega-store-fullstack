@@ -159,10 +159,10 @@ function Home() {
                 {/* Image Section */}
                 <div className="h-48 w-full overflow-hidden bg-gray-50 flex  items-center justify-center p-3">
                   <img
-                    src={item.API_BASE_URL }
+                    src={item.imae_url}
                     alt={item.name}
                     className="max-w-full max-h-full object-contain"
-                    onError={(e) => { e.target.src=Image.API_BASE_URL }}
+                    onError={(e) => { e.target.src=item.image_url}}
                   />
                 </div>
 
